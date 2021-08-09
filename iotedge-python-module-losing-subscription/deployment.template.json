@@ -24,13 +24,8 @@
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
-            "env": {
-              "RuntimeLogLevel": {
-                "value": "debug"
-              }
-            },
             "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-hub:1.2.3",
+              "image": "${MODULES.edgehubwithpersistence}",
               "createOptions": {
                 "HostConfig": {
                   "PortBindings": {
@@ -49,8 +44,19 @@
                         "HostPort": "443"
                       }
                     ]
-                  }
+                  },
+                  "Binds": [
+                    "myshare2:/offline_store"
+                  ]
                 }
+              }
+            },
+            "env": {
+              "RuntimeLogLevel": {
+                "value": "debug"
+              },
+              "storageFolder": {
+                "value": "/offline_store"
               }
             }
           }
